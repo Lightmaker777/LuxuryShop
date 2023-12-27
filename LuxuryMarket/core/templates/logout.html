@@ -1,0 +1,39 @@
+<!-- core/templates/logout.html -->
+{% extends 'base.html' %}
+{% load static %} 
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+<style>
+    .logout-form-container {
+        background-color: #e7e7c8;
+        
+    }
+    .logout-form-container form textarea {
+        font-size: 40px; /* Adjust the value as needed */
+    }
+
+    .logout-form-container form label {
+        font-size: 40px; /* Adjust the value as needed */
+    }
+</style>
+<div class="container d-flex justify-content-center align-items-center vh-50 font-monospace">
+    <div class="row">
+      <div class="col-l-10 logout-form-container">
+            <fieldset class="form-group">
+                <b><h1 class="logout">Goodbye!</h1></b><br>
+                <b><p><h2 class="logout">You have been successfully logged out!</h2></p></b><br>
+                <br>
+            </fieldset>
+        
+        <form method="post" action="{% url 'logout' %}">
+            {% csrf_token %}            
+            <div class="form-group">
+                <b><p><h1 class="logout">Feel free to  <a class="btn btn-outline-secondary btn-lg mx-2" href="{% url 'login' %}">Login</a> 
+                     again or explore our 
+                <a class="btn btn-outline-secondary btn-lg mx-2" href="{% url 'home' %}"> Home Page. </h1></a></p></b>
+            </div>
+        </form>
+    </div>
+    </div>
+</div>
+{% endblock %}

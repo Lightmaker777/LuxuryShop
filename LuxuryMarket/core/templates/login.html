@@ -1,0 +1,55 @@
+<!-- core/templates/login.html -->
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}    
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+
+<style>
+    /* Custom CSS for login form font size */
+    .login-form-container form input,
+    .login-form-container form select,
+    .login-form-container form textarea {
+        font-size: 40px; /* Adjust the value as needed */
+    }
+
+    .login-form-container form label {
+        font-size: 40px; /* Adjust the value as needed */
+    }
+    .login-form-container {
+      background-color: #e7e7c8;
+    }
+    .login-form-container .content-section {
+        color: var(--bs-golden-primary);
+        font-size: 40px;
+    }
+</style>
+
+<div class="container d-flex justify-content-center align-items-center vh-50">
+    <div class="row">
+        <div class="col-l-10 login-form-container">
+            <div><fieldset class="form-group">
+                <b><h1 class="welcome">Login Page</h1></b>
+            </fieldset></div>
+            <div class="content-section">   
+            <form method="post" action="{% url 'login' %}">
+                {% csrf_token %}
+                {{ form | crispy}}
+                <div class="form-group">
+                    <button class="btn btn-outline-secondary btn-lg" type="submit">Login</button>
+                    <small class="text-muted ml-2">
+                        <a href="{% url 'password_reset' %}">Forgot Password?</a>
+                    </small>
+                </div>
+            </form>
+         
+            <div class="border-top pt-3">
+                <small class="text-muted">
+                    Need an Account? <a class="ml-2" href="{% url 'register' %}">Sign Up Now</a>
+                </small>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

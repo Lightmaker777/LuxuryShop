@@ -1,0 +1,95 @@
+<!-- core/templates/terms-and-conditions.html -->
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Terms and Conditions</title>    
+</head>
+<body>
+    <b><strong><h1 class="text-center">Terms and Conditions</h1></strong></b>
+    <p>Please read and agree to the following terms and conditions before proceeding with registration:</p>
+    <p>
+        This agreement outlines the terms and conditions under which you may use our website and services. By proceeding with registration, you agree to be bound by these terms and conditions.
+    </p>
+    <p>1. Introduction</p>
+    <p>
+        These Terms and Conditions ("Terms") govern your access to and use of the [Project Name] website and mobile application (collectively, the "Service"). By accessing or using the Service, you agree to be bound by these Terms. If you do not agree to these Terms, you are not authorized to access or use the Service.
+    </p>
+    <p>2. Eligibility</p>
+    <p>
+        The Service is intended for users who are [Minimum Age]. By accessing or using the Service, you represent and warrant that you are at least [Minimum Age] and that you have the legal capacity to enter into these Terms.
+    </p>
+    <p>3. Account Creation and Passwords</p>
+    <p>
+        Certain features of the Service may require you to create an account and provide certain information about yourself, such as your name and email address. You are responsible for maintaining the confidentiality of your account password and for all activities that occur under your account. You agree to (a) promptly notify [Company Name] of any unauthorized use of your account or password; and (b) ensure that you exit from your account at the end of each session. [Company Name] will not be liable for any loss or damage arising from your failure to comply with these obligations.
+    </p>
+    <p>4. User Content</p>
+    <p>
+        You are solely responsible for all content that you submit, post, or display ("User Content") on or through the Service. You grant [Company Name] a non-exclusive, worldwide, royalty-free license to use, reproduce, distribute, prepare derivative works of, display, perform, and sublicense User Content in connection with the Service. You represent and warrant that you have all necessary rights to grant such license to [Company Name].
+    </p>
+    <p>5. Restrictions on Use</p>
+    <p>
+        You may not use the Service for any illegal or unauthorized purpose. You agree not to use the Service to:
+    </p>
+    <ul>
+        <li>Upload, post, or transmit any User Content that is unlawful, harmful, threatening, abusive, harassing, tortious, defamatory, libelous, invasive of another's privacy, hateful, or racially, ethnically, or otherwise objectionable;</li>
+        <li>Upload, post, or transmit any User Content that infringes any intellectual property right of any third party;</li>
+        <li>Use any robot, spider, or other automated device or process to access the Service;</li>
+        <li>Interfere with or disrupt the Service or servers or networks connected to the Service;</li>
+        <li>Attempt to gain unauthorized access to the Service or any part of the Service;</li>
+        <li>Use the Service to harm minors;</li>
+        <li>Violate any applicable laws or regulations.
+    </ul>
+    <p>6. Termination</p>
+    <p>
+        [Company Name] may terminate your access to the Service for any reason, including, but not limited to, if you violate these Terms.
+    </p>
+    <p>7. Disclaimer of Warranties</p>
+    <p>
+        THE SERVICE IS PROVIDED "AS IS" AND "AS AVAILABLE" AND [COMPANY NAME] MAKES NO WARRANTIES OF ANY KIND, EXPRESS OR IMPLIED, WITH RESPECT TO THE SERVICE. [COMPANY NAME] EXPRESSLY DISCLAIMS ALL WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT.
+    </p>
+    <p>8. Limitation of Liability</p>
+    <p>
+        N NO EVENT WILL [COMPANY NAME] BE LIABLE FOR ANY INDIRECT, INCIDENTAL, CONSEQUENTIAL, SPECIAL, EXEMPLARY, OR PUNITIVE DAMAGES, INCLUDING, BUT NOT LIMITED TO, DAMAGES FOR LOSS OF PROFITS, REVENUE, GOODWILL, USE, DATA, OR OTHER INTANGIBLE LOSSES, ARISING OUT OF OR IN CONNECTION WITH THE USE OF OR INABILITY TO USE THE SERVICE, EVEN IF [COMPANY NAME] HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+
+    <p>9. Entire Agreement</p>
+<p>
+These Terms constitute the entire agreement between you and [Company Name] with respect to the subject matter hereof and supersede all prior or contemporaneous communications, representations, or agreements, whether oral or written.
+</p>
+<p>10. Governing Law</p>
+<p>
+    These Terms will be governed by and construed in accordance with the laws of [State]. You agree to submit to the exclusive jurisdiction of the courts located in [State] in connection with any dispute arising out of or relating to these Terms.
+
+</p>
+
+<p>11. Severability</p>
+<p>
+If any provision of these Terms is held to be invalid or unenforceable, such provision will be struck from these Terms and the remaining provisions will remain in full force and effect.
+</p>
+<p>12. Waiver</p>
+
+<p>
+No waiver of any provision of these Terms will be effective unless in writing and signed by an authorized representative of [Company Name].
+</p>
+<p>13. Assignment</p>
+<p>
+You may not assign or transfer any of your rights or obligations under these Terms without the prior written consent of Luxury§hop.
+</p>
+<p>14. Notices</p>
+<p>
+All notices and other communications hereunder shall be in writing and shall be deemed to have been duly given
+</p>
+
+    
+
+    <button class="btn btn-secondary" type="submit" ><a class="ml-2"href="{% url 'register' %}">Done to Read! Go Back to Submit!</a></button>
+</body>
+</html>
+{% endblock %}

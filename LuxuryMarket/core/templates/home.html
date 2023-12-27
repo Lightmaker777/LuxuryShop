@@ -1,0 +1,39 @@
+<!-- core/templates/home.html -->
+{% extends 'base.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Luxury$hop{% endblock %}</title>    
+    {% block extra_styles %}{% endblock %}
+</head> 
+<body>
+    {% block content %}      
+    {% include 'carousel.html' %}      
+    
+    <main>
+        <div class="section2">
+            <div class="section3">
+                <h3>Shop with Confidence</h3>
+                <p>Find authentic pre-owned luxury items with our secure marketplace.</p>
+            </div>
+            
+            <div class="section3">
+                <h3>Connect with Enthusiasts</h3>
+                <p>Join our vibrant community to discuss listings, share style tips, and more.</p>
+            </div>
+            
+            <div class="section3"">
+                <h3>Exclusive VIP Membership</h3>
+                <p>Unlock special benefits with our VIP membership program. Join now!</p>
+            </div>
+        </div>
+    </main>        
+    
+    {% endblock %}
+    {% block extra_scripts %}{% endblock %}
+    </body>
+</html>

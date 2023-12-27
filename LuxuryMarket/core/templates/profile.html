@@ -1,0 +1,59 @@
+<!-- core/templates/profile.html -->
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+
+<style>
+    /* Custom CSS for profile form font size */
+    .profile-form-container form input,
+    .profile-form-container form select,
+    .profile-form-container form textarea {
+        font-size: 30px; 
+    }
+
+    .profile-form-container form label {
+        font-size: 40px; 
+    }
+    .profile-form-container {
+        background-color: #e7e7c8;
+        
+    }
+    .profile-form-container .content-section {
+        color: var(--bs-golden-primary);
+        font-size: 25px;
+    }
+</style>
+
+<!-- Personal Photo Section -->
+<div class="container d-flex justify-content-center align-items-center vh-50">
+  <div class="row">
+    <div class="col-l-10 profile-form-container">
+      <div class="content-section">
+        <div class="media">    
+            <img class="img-thumbnail w-45 h-45 md:h-auto rounded-full" src="{{ user.profile.image.url }}" alt="Profile Photo">
+            <div class="media-body">       
+                <p class="account-heading text-dark-50">Username: {{ user.username }}</p>
+                <p class="text-info">Email: {{ user.email }}</p>
+            </div>    
+        </div>
+
+        <!-- FORM GOES HERE -->
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <fieldset class="form-group"> 
+                <b><legend class="border-botton">Profile Info:</legend></b>         
+                {{ u_form|crispy }}
+                {{ p_form|crispy }}
+            </fieldset>
+            <div class="form-group mb-4">
+                <button class="btn btn-outline-secondary" type="submit">Update</button>
+            </div>
+        </form>         
+        <button type="button" class="btn btn-outline-secondary">Join Real-Time Show</button><br></br> 
+      </div>      
+    </div> 
+  </div>
+</div>
+{% endblock content %}

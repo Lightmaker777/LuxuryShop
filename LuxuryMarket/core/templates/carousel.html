@@ -1,0 +1,90 @@
+<!-- core/templates/carousel.html -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Luxury$hop{% endblock %}</title>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.7.0/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.7.0/dist/css/bootstrap.min.css">  
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+</head> 
+<body>
+    <div class="container">
+        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">  
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselExampleIndicators"data-bs-slide-to="0" class="active"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators"data-bs-slide-to="1" aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators"data-bs-slide-to="2" aria-label="Slide 3"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators"data-bs-slide-to="3" aria-label="Slide 4"></button>                
+                <button type="button" data-bs-target="#carouselExampleIndicators"data-bs-slide-to="4" aria-label="Slide 5"></button>
+
+            </div>         
+                
+            <div class="carousel-inner">
+
+                <div class="carousel-item active c-item">
+                    <img class="d-block w-100 c-img" src="{% static 'images/image11.png' %}" alt="First slide">
+                    <div class="carousel-caption top-5 mt-6 d-none d-md-block">
+                        <p class="display-1 fw-bolder mt-5 fs-3">Discover Luxury, Embrace Style</p>
+                        <b><h1 class="welcome">Welcome to Luxury$hop</h1></b><br>     
+                        <p class="display-1 fw-bolder mt-5 fs-3">Explore our curated collection of pre-owned luxury items from top brands.</p>
+                        <button class="btn btn-warning px-4 py-2 fs-5 mt-5" href="{% url 'register' %}">Join Real-Time SHOWs Today!</button>
+                    </div>
+                </div>
+
+                <div class="carousel-item c-item">
+                    <img class="d-block w-100 c-img" src="{% static 'images/image22.png' %}" alt="Second slide">
+                    <div class="carousel-caption top-5 mt-6 d-none d-md-block">
+                        <p class="display-1 fw-bolder mt-5 fs-3">Discover Luxury, Embrace Style</p>
+                        <b><h1 class="welcome">Welcome to Luxury$hop</h1></b><br>     
+                        <p class="display-1 fw-bolder mt-5 fs-3">Explore our curated collection of pre-owned luxury items from top brands.</p>
+                        <button class="btn btn-warning px-4 py-2 fs-5 mt-5" href="{% url 'register' %}">Join Real-Time SHOWs Today!</button>
+                    </div>
+                </div>
+
+                <div class="carousel-item c-item">
+                    <img class="d-block w-100 c-img" src="{% static 'images/image3.png' %}" alt="Third slide">
+                    <div class="carousel-caption top-5 mt-6 d-none d-md-block">
+                        <p class="display-1 fw-bolder mt-5 fs-3">Discover Luxury, Embrace Style</p>
+                        <b><h1 class="welcome">Welcome to Luxury$hop</h1></b><br>     
+                        <p class="display-1 fw-bolder mt-5 fs-3">Explore our curated collection of pre-owned luxury items from top brands.</p>
+                        <button class="btn btn-warning px-4 py-2 fs-5 mt-5" href="{% url 'register' %}">Join Real-Time SHOWs Today!</button>
+                    </div>
+                </div>
+                <div class="carousel-item c-item">
+                    <img class="d-block w-100 c-img" src="{% static 'images/image4.png' %}" alt="Third slide">
+                    <div class="carousel-caption top-5 mt-6 d-none d-md-block">
+                        <p class="display-1 fw-bolder mt-5 fs-3">Discover Luxury, Embrace Style</p>
+                        <b><h1 class="welcome">Welcome to Luxury$hop</h1></b><br>     
+                        <p class="display-1 fw-bolder mt-5 fs-3">Explore our curated collection of pre-owned luxury items from top brands.</p>
+                        <button class="btn btn-warning px-4 py-2 fs-5 mt-5" href="{% url 'register' %}">Join Real-Time SHOWs Today!</button>
+                    </div>
+                </div>
+                <div class="carousel-item c-item">
+                    <img class="d-block w-100 c-img" src="{% static 'images/image5.png' %}" alt="Third slide">
+                    <div class="carousel-caption top-5 mt-6 d-none d-md-block">
+                        <p class="display-1 fw-bolder mt-5 fs-3">Discover Luxury, Embrace Style</p>
+                        <b><h1 class="welcome">Welcome to Luxury$hop</h1></b><br>     
+                        <p class="display-1 fw-bolder mt-5 fs-3">Explore our curated collection of pre-owned luxury items from top brands.</p>
+                        <button class="btn btn-warning px-4 py-2 fs-5 mt-5" href="{% url 'register' %}">Join Real-Time SHOWs Today!</button>
+                    </div>
+                </div>
+
+            </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+                        
+        </div>     
+    </div>
+</body>
+</html>
