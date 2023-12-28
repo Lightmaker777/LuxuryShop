@@ -16,6 +16,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'daphne',
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -25,11 +26,22 @@ INSTALLED_APPS = [
     "rest_framework",
     'rest_framework_simplejwt',
     "core",
+    'chatapp',
     'crispy_forms',
     'crispy_bootstrap5',
-      
+    'channels',    
     
 ]
+# Channels
+ASGI_APPLICATION = "LuxuryMarket.asgi.application"
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("127.0.0.1", 6379)],
+        },
+    },
+}
 # Bootstrap 5 crispy forms settings
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
