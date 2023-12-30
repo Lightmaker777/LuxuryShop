@@ -1,59 +1,127 @@
 <!-- chatapp/templates/room.html -->
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8"/>
-    <title>Chat Room</title>
-</head>
-<body>
-    <textarea id="chat-log" cols="100" rows="20"></textarea><br>
-    <input id="chat-message-input" type="text" size="100"><br>
-    <input id="chat-message-submit" type="button" value="Send">
-    <script id="room-name" type="application/json">{{ room_name|safe }}</script>
-    
-    <script>
-        const roomNameElement = document.getElementById('room-name');
-        const roomName = roomNameElement ? roomNameElement.textContent : null;
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+<link rel="stylesheet" href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css">
+<script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" defer></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/3.6.95/css/materialdesignicons.css">
+<style>
+    .larger-content {
+    font-size: 20px;
+}
+    .chat-box {
+        background-image: url('{% static "images/bg_chat9.png" %}');
+}
+</style>
 
-        console.log('Raw room name:', roomName);
+    <div class="flex justify-center items-center h-screen ">
+        <div class="w-80 h-96 bg-white rounded shadow-2xl larger-content chat-box">
+            <nav class="w-full h-10 bg-gray-900 rounded-tr rounded-tl flex justify-between items-center">
+                <div class="flex justify-center items-center">
+                    <i class="mdi mdi-arrow-left font-normal text-gray-300 ml-1"></i>
+                    <img src="{{ user.profile.image.url }}" class="rounded-full ml-1" width="40" height="40">
+                    <span class="text-xs font-medium text-gray-300 ml-1">{{ user.username }}</span>
+                </div>
+                <div class="flex items-center">
+                    <i class="mdi mdi-video text-gray-300 mr-4"></i>
+                    <i class="mdi mdi-phone text-gray-300 mr-2"></i>
+                    <i class="mdi mdi-dots-vertical text-gray-300 mr-2"></i>
+                </div>
+            </nav>
 
-        const chatSocket = new WebSocket(
-            'ws://'
-            + window.location.host
-            + '/ws/chatapp/'
-            + (roomName ? encodeURIComponent(roomName) : '')
-            + '/'
-        );
+            <div class="overflow-auto px-1 py-1" style="height: 19rem;" id="journal-scroll">
+               
+                <div id="chatmsg"></div>
+            </div>
 
-        chatSocket.onopen = function(e) {
-            console.log('WebSocket connection opened:', e);
-        };
+            <div class="flex justify-between items-center p-1">
+                <div class="relative">
+                    <i class="mdi mdi-emoticon-excited-outline absolute top-1 left-1 text-gray-400"
+                        style="font-size: 17px !important;font-weight: bold;"></i>
+                    <input type="text" class="rounded-full pl-6 pr-12 py-2 focus:outline-none h-auto placeholder-gray-100 bg-gray-900 text-white"
+                        style="font-size: 11px;width: 250px;" placeholder="Type a message..." id="typemsg">
+                    <i class="mdi mdi-paperclip absolute right-8 top-1 transform -rotate-45 text-gray-400"></i>
+                    <i class="mdi mdi-camera absolute right-2 top-1 text-gray-400"></i>
+                </div>
+                <div class="w-7 h-7 rounded-full bg-purple-500 text-center items-center flex justify-center hover:bg-gray-900 hover:text-white">
+                    <i class="mdi mdi-microphone "></i>
+                </div>
+                <div class="w-7 h-7 rounded-full bg-purple-500 text-center items-center flex justify-center">
+                    <button class="w-7 h-7 rounded-full text-center items-center flex justify-center focus:outline-none hover:bg-gray-900 hover:text-white"
+                        onclick="sendbtn();"><i class="mdi mdi-send "></i></button>
+                </div>
+            </div>
 
-        chatSocket.onmessage = function(e) {
-            const data = JSON.parse(e.data);
-            console.log('Received message:', data.message);
-            document.querySelector('#chat-log').value += (data.message + '\n');
-        };
+            {{ room_name|json_script:"room-name" }}
+            {{ request.user.username|json_script:"user_name" }}
+            {{ user.profile.image.url|json_script:"user_image_url" }}
 
-        chatSocket.onclose = function(e) {
-            console.error('Chat socket closed unexpectedly:', e);
-        };
+            <script>
+                const user_name = JSON.parse(document.getElementById("user_name").textContent);
+                const roomName = JSON.parse(document.getElementById("room-name").textContent);
+                const userImageURL = JSON.parse(document.getElementById("user_image_url").textContent);
 
-        document.querySelector('#chat-message-input').focus();
-        document.querySelector('#chat-message-input').onkeyup = function(e) {
-            if (e.key === 'Enter') {
-                document.querySelector('#chat-message-submit').click();
-            }
-        };
+                const chatSocket = new WebSocket(
+                    'ws://' + window.location.host + '/ws/chatapp/' + roomName + '/'
+                );
 
-        document.querySelector('#chat-message-submit').onclick = function(e) {
-            const messageInputDom = document.querySelector('#chat-message-input');
-            const message = messageInputDom.value;
-            chatSocket.send(JSON.stringify({
-                'message': message
-            }));
-            messageInputDom.value = '';
-        };
-    </script>
-</body>
-</html>
+                chatSocket.onmessage = function (e) {
+                    const data = JSON.parse(e.data);
+                    console.log(data);
+
+                    var printtext = document.getElementById('chatmsg');
+                    var currentdate = new Date();
+                    var printnow = '';
+
+                    if (data.username === user_name) {
+                        // This is your message
+                        printnow = '<div class="flex items-center pr-1 justify-end">' +
+                                '<span class="flex mr-1 bg-purple-300 h-auto text-dark-200 text-xs font-normal rounded-lg px-1 p-1 items-end flex justify-end" style="font-size: 10px;">' +
+                                data.message +
+                                '<span class="text-gray-700 pl-1" style="font-size: 8px;">' +
+                                currentdate.getHours() + ':' + currentdate.getMinutes() +
+                                '</span>' +
+                                '</span>' +
+                                '<img src="' + userImageURL + '" class="rounded-full shadow-xl" width="32" height="32">' +
+                                '</div>';
+                    } else {
+                        // This is a received message
+                        printnow = '<div class="flex items-center pr-10">' +
+                            '<img src="' + data.user_photos + '" class="rounded-full shadow-xl" width="32" height="32">' +
+                            '<span class="flex ml-1 h-auto bg-gray-200 text-dark-500 text-xs font-normal rounded-lg px-1 p-1 items-end" style="font-size: 10px;">' +
+                            data.message +
+                            '<span class="text-gray-400 pl-1" style="font-size: 8px;">' +
+                            currentdate.getHours() + ':' + currentdate.getMinutes() +
+                            '</span>' +
+                            '</span>' +
+                            '</div>';
+                    }
+
+                    printtext.insertAdjacentHTML('beforeend', printnow);
+
+                    var box = document.getElementById('journal-scroll');
+                    box.scrollTop = box.scrollHeight;
+                };
+
+                function sendbtn() {
+                    var copytext = document.getElementById('typemsg');
+                    var currentdate = new Date();
+                    var copiedtext = copytext.value;
+
+                    chatSocket.send(JSON.stringify({
+                        'message': copiedtext,
+                        'username': user_name,
+                        'user_photos': userImageURL,  // Include the profile image URL
+                    }));
+
+                    copytext.value = '';
+                }
+            </script>
+            
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

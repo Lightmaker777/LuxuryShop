@@ -1,6 +1,6 @@
+# chatapp/consumers.py
 import json
 from channels.generic.websocket import AsyncWebsocketConsumer
-
 
 class ChatConsumer(AsyncWebsocketConsumer):
     async def connect(self):
@@ -11,8 +11,8 @@ class ChatConsumer(AsyncWebsocketConsumer):
         await self.channel_layer.group_add(
             self.room_group_name, self.channel_name
         )
-
-        await self.accept()
+        await self.accept()     
+        
 
     async def disconnect(self, close_code):
         # Leave room group
@@ -20,19 +20,26 @@ class ChatConsumer(AsyncWebsocketConsumer):
             self.room_group_name, self.channel_name
         )
 
+
     # Receive message from WebSocket
     async def receive(self, text_data):
         text_data_json = json.loads(text_data)
         message = text_data_json["message"]
+        username = text_data_json["username"]
+        user_photos = text_data_json.get("user_photos", None)
 
-        # Send message to room group
+
+    # Send message to room group
         await self.channel_layer.group_send(
-            self.room_group_name, {"type": "chat.message", "message": message}
+            self.room_group_name, {"type": "chat_message", "message": message, "username": username, "user_photos": user_photos,}
         )
 
     # Receive message from room group
     async def chat_message(self, event):
         message = event["message"]
+        username = event["username"]
+        user_photos = event.get("user_photos", None)
 
         # Send message to WebSocket
-        await self.send(text_data=json.dumps({"message": message}))
+        await self.send(text_data=json.dumps({"message": message, "username": username, "user_photos": user_photos,}))
+    pass
