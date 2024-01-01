@@ -1,0 +1,22 @@
+<!-- user_search.html -->
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+
+    <div class="container d-flex justify-content-center align-items-center vh-50">
+        <div class="row">
+            <h2>Search Results {{ query }}</h2>
+
+            {% if results %}
+                <ul>
+                    {% for user in results %}
+                        <li><a href="{% url 'user_profile' username=user.username %}">{{ user.username }}</a></li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No results found.</p>
+            {% endif %}
+        </div>
+    </div>    
+{% endblock content %}

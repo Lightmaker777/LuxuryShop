@@ -8,6 +8,8 @@ import os
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     image = models.ImageField(default='default.png', upload_to='user_photos')
+    followers = models.ManyToManyField(User, related_name='following', blank=True)
+
 
     def __str__(self):
         return f'{self.user.username}'

@@ -1,11 +1,15 @@
 # core/views.py
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from multiprocessing import context
 from django.views.generic import TemplateView
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
-
+from django.contrib.auth.models import User
+from django.views import View
+from django.urls import reverse
+from .models import Profile
+from django.views.decorators.http import require_POST
 
 def home(request):
     return render(request, 'home.html')
@@ -51,3 +55,27 @@ def profile(request):
 class TermsAndConditionsView(TemplateView):
     template_name = 'terms-and-conditions.html'
 
+def user_search(request):
+    query = request.GET.get('q', '')
+    results = User.objects.filter(username__icontains=query)
+    return render(request, 'user_search.html', {'results': results, 'query': query})
+
+@login_required
+def user_profile(request, username):
+    user_profile = get_object_or_404(Profile, user__username=username)
+    context = {'user_profile': user_profile}
+    return render(request, 'profile_view_for_other_users.html', context)
+
+@login_required
+@require_POST
+def follow_unfollow(request, username):
+    user_profile = get_object_or_404(Profile, user__username=username)
+
+    if request.user.profile in user_profile.followers.all():
+        user_profile.followers.remove(request.user.profile)
+        messages.success(request, f'You unfollowed {user_profile.user.username}.')
+    else:
+        user_profile.followers.add(request.user.profile)
+        messages.success(request, f'You are now following {user_profile.user.username}.')
+
+    return redirect(reverse('core:user_profile', kwargs={'username': username}))

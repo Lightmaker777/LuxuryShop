@@ -1,0 +1,160 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<style>
+   
+
+    .line {
+        height: 50px;  /* Increase the height of the line */
+        background-color: #EEEEEE;
+        width: 100%;
+        margin: 35px 0px;
+    }
+
+    .card {
+        max-width: 1800px;  /* Increase the maximum width of the card */
+        margin: auto;
+        padding: 20px;  /* Add padding to the card */
+    }
+
+    .user-img {
+        width: 200px;  /* Increase the width and height of the user image */
+        height: 200px;
+        border-radius: 50%;
+        cursor: pointer;
+    }
+
+    .fa-star.active {
+        color: #E91E63;
+    }
+
+    .btn-pink {
+        background-color: #E91E63;
+        color: #fff;
+        height: 70px;
+        padding: 20px 30px;
+        margin-top: 15px;
+    }
+
+    .btn-pink:hover {
+        background-color: #D81B60;
+    }
+
+    .image-bg {
+        width: 180px;  /* Increase the width of the image container */
+    }
+
+    .fit-image {
+        object-fit: cover;
+        width: 100%;
+    }
+
+    .text-left {
+        margin-left: 5px;  /* Add margin to the left side of the text content */
+    }
+
+    .prod-pic {
+        width: 100px;  /* Increase the width and height of the product images */
+        height: 120px;
+        cursor: pointer;
+    }
+
+    .prod-bg {
+        width: 24%;  /* Increase the width of the product background container */
+        height: 140px;
+        background-color: #E0E0E0;
+        margin-bottom: 10px;
+    }
+
+    .fat-img {
+        width: 120px;  /* Increase the width and height of the fat image */
+        height: 120px;
+    }
+
+    .more {
+        width: 24%;  /* Increase the width of the more container +6 items*/
+        height: 140px;
+        color: #fff;
+        background-color: #000;
+        cursor: pointer;
+    }
+
+    @media screen and (max-width: 677px) {
+        .card {
+            width: 100%;
+            margin: auto;
+            padding: 50px;  /* Adjust padding for smaller screens */
+        }
+
+        .btn-pink {
+            width: 100%;
+            height: 40px;
+            padding: 10px 15px;  /* Adjust padding for smaller screens */
+        }
+
+        .prod-bg {
+            width: 48%;  /* Adjust width for smaller screens */
+            height: 140px;
+            background-color: #E0E0E0;
+        }
+
+        .more {
+            width: 100%;  /* Adjust width for smaller screens */
+        }
+    }
+</style>
+
+<div class="container-fluid py-5 mx-auto">
+    <div class="card py-4 px-4">
+        <div class="row justify-content-start px-3">
+            <div class="image-bg mr-3">
+                <img class="user-img fit-image" src="{{ user_profile.user.profile.image.url }}">
+            </div>
+            <div class="text-left">
+                <h2>{{ user_profile.user.username }}</h2>
+                <h6>10 ITEMS - 21 SALE - 8 COMMENTS</h6>
+                <span class="fa fa-star active"></span>
+                <span class="fa fa-star active"></span>
+                <span class="fa fa-star active"></span>
+                <span class="fa fa-star active"></span>
+                <span class="fa fa-star"></span>
+            </div>
+            <div class="ml-auto">
+                <form method="post">
+                    {% if user_profile.user != request.user %}
+                        {% if request.user in user_profile.followers.all %}
+                            <form method="post" action="{% url 'follow_unfollow' user_profile.user.username %}">
+                                {% csrf_token %}
+                                <button class="btn btn-secondary" type="submit" name="unfollow">Unfollow</button>
+                            </form>
+                        {% else %}
+                            <form method="post" action="{% url 'follow_unfollow' user_profile.user.username %}">
+                                {% csrf_token %}
+                                <button class="btn btn-pink" type="submit" name="follow">Follow</button>
+                            </form>
+                        {% endif %}
+                    {% endif %}
+                </form>
+            </div>
+        </div>
+        <div class="line"></div>
+        <div class="row d-flex justify-content-between px-3">
+            <div class="prod-bg text-center py-1"><img class="prod-pic" src="https://i.imgur.com/6bdzZKE.png"></div>
+            <div class="prod-bg text-center py-1"><img class="prod-pic" src="https://i.imgur.com/CGaJoDY.png"></div>
+            <div class="prod-bg text-center py-1"><img class="prod-pic fat-img" src="https://i.imgur.com/8JVdjVT.png"></div>
+            <div class="prod-bg text-center py-1"><img class="prod-pic" src="https://i.imgur.com/uJGwaIy.png"></div>
+            <div class="more text-center pt-3">
+                <h1 class="mb-0 dk-none dk-sm-block"><strong>+6</strong></h1>
+                <h5>ITEMS</h5>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
